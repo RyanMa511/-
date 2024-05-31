@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+    <title>可點擊網格</title> 
+    <style>
+        * {
+            font-family: Arial;
+        }
+        header, footer {
+            background-color: #666666;
+            color: #FFFFFF; 
+            text-align: center; 
+            padding: 10px; 
+        }
+        main {
+            padding: 10px 0; 
+        }
+        .grid-container {
+            display: grid; 
+            grid-template-columns: repeat(3,1fr)`;
+            grid-gap: 10px; 
+            width:240px ; 
+            margin: auto; 
+        }
+        .grid-item {
+            display: grid; 
+            width: 80px; 
+            height: 80px; 
+            justify-content: center; 
+            align-items: center; 
+            background-color: #F0F0F0; 
+            cursor: pointer; 
+        }
+        .yellow {
+            background-color: #ff0; 
+        }
+        .green {
+            background-color: #008000; 
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>可點擊網格</h1> 
+</header>
+<main>
+      <div class="grid-container" id="grid-container">
+      </div>
+</main>
+<footer>
+    <b>單元五練習三 (2024.01.26)</b>
+</footer>
+
+<script>
+    function toggleGridSelection(event) {
+        var grid = event.target; 
+        var clickCount = grid.getAttribute('data-click-count') || 0;
+        clickCount = parseInt(clickCount, 10); 
+        grid.classList.remove('yellow');
+        grid.classList.remove('green');
+        switch (clickCount) {
+            case 0:
+                grid.classList.add('yellow');
+                break;
+            case 1:
+                grid.classList.add('green');
+                break;
+            case 2:
+                clickCount = -1;
+                break;
+        }
+        clickCount += 1;
+        grid.setAttribute('data-click-count', clickCount.toString());
+    }
+
+    const userInput = prompt('Please enter the size:');
+    const gridcontainer = document.getElementById('grid-container');
+    gridcontainer.style.gridTemplateColumns=`repeat(${userInput},1fr)`;
+    gridcontainer.style.width=`${(userInput*80+(userInput-1)*10)}px`;
+    
+    if (userInput) {
+      for (let i = 1; i < userInput*userInput; i++) {
+        var newGrid = document.createElement('div');
+        newGrid.classList.add('grid-item');
+        newGrid.textContent = i;
+        gridcontainer.appendChild(newGrid);
+        }};
+        
+    document.querySelectorAll('.grid-item').forEach(function (grid) {
+    grid.addEventListener('click', toggleGridSelection);
+    })
+
+
+</script>
+</body></html>
